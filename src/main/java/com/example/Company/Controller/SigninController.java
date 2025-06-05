@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.Company.entity.Contact;
 import com.example.Company.entity.Signin;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.example.Company.Service.Contact_Service;
 import com.example.Company.Service.Signin_Service;
 
 @Controller
@@ -20,6 +22,9 @@ public class SigninController {
 	
 	 @Autowired
 	 private Signin_Service cServ;
+	 
+	 @Autowired
+	 private Contact_Service contactServ;
 	
 	 @GetMapping("/")
 	    public String home() {
@@ -50,6 +55,11 @@ public class SigninController {
 	 {
 		 return "Contact";
 	 }
+	 @GetMapping("/contactn")
+	 public String contactn()
+	 {
+		 return "Newcontact";
+	 }
 	 
 	 @GetMapping("/signin")
 	 public String signin()
@@ -75,5 +85,15 @@ public class SigninController {
 	        model.addAttribute("Userfname", user.getFirstname());
 	        return "Head";  
 	    }
+	 
+	 @PostMapping("/contactnew")
+	 public String Contact( @ModelAttribute Contact c,Model model, HttpSession session )
+	 {
+		 Signin userd=(Signin) session.getAttribute("userd");
+		 contactServ.contactSave(c);
+	     model.addAttribute("success", "Signup successful! You can now log in.");
+	     model.addAttribute("Userfname", userd.getFirstname());
+	     return "Head";  
+	 }
 
 }

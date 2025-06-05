@@ -20,7 +20,7 @@ public class ContactController {
 	 {
 		 contactServ.contactSave(c);
 	     model.addAttribute("success", "Signup successful! You can now log in.");
-	     return "Head";  
+	     return "Home";  
 
 
 	 }
